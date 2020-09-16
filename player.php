@@ -12,7 +12,7 @@
             background-color: #f2f2f2;
             width: 640px;
             height: 360px;
-            pointer-events: none;
+            /* pointer-events: none; */
         }
 
         .video-wrapper {
@@ -67,7 +67,8 @@
 
             fill: currentColor;
         }
-        .video-ended{
+
+        .video-ended {
             position: absolute;
             z-index: 5;
             left: 0;
@@ -87,20 +88,19 @@
     <div class="container">
         <h1 class="text-center mb-3">PHP Vimeo Player Tutorial</h1>
 
-        <div class="row">
+        <div class="row mb-4">
 
             <div class="col-auto">
 
                 <div class="video-wrapper">
                     <div id="made-in-ny" class="player"></div>
-                    <!-- <iframe src="https://player.vimeo.com/video/458631997" frameborder="0" width="640" height="360" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
 
                     <div class="video-control d-none">
-                        <button type="button" class="video-control-btn" id="act-play"><svg width="20" height="20" viewBox="0 0 20 20">
+                        <button type="button" class="video-control-btn act-play"><svg width="20" height="20" viewBox="0 0 20 20">
                                 <title id="play-icon-title">Play</title>
                                 <polygon class="fill" points="1,0 20,10 1,20"></polygon>
                             </svg></button>
-                        <button type="button" class="video-control-btn d-none" disabled id="act-pause"><svg width="20" height="20" viewBox="0 0 20 20" preserveAspectRatio="xMidYMid" focusable="false" aria-labelledby="pause-icon-title" role="img">
+                        <button type="button" class="video-control-btn d-none act-pause" disabled><svg width="20" height="20" viewBox="0 0 20 20" preserveAspectRatio="xMidYMid" focusable="false" aria-labelledby="pause-icon-title" role="img">
                                 <title id="pause-icon-title">Pause</title>
                                 <rect class="fill" width="6" height="20" x="0" y="0"></rect>
                                 <rect class="fill" width="6" height="20" x="12" y="0"></rect>
@@ -111,8 +111,28 @@
                         <div class="d-flex h-100 justify-content-center text-muted align-items-center">
                             Vimeo End
                         </div>
-                        
+
                     </div>
+                </div>
+
+                <div class="d-flex mt-2">
+                    <button type="button" class="video-control-btn act-play mr-2"><svg width="20" height="20" viewBox="0 0 20 20">
+                            <title id="play-icon-title">Play</title>
+                            <polygon class="fill" points="1,0 20,10 1,20"></polygon>
+                        </svg></button>
+
+                    <button type="button" class="video-control-btn d-none act-pause mr-2" disabled><svg width="16" height="16" viewBox="0 0 20 20" preserveAspectRatio="xMidYMid" focusable="false" aria-labelledby="pause-icon-title" role="img">
+                            <title id="pause-icon-title">Pause</title>
+                            <rect class="fill" width="6" height="20" x="0" y="0"></rect>
+                            <rect class="fill" width="6" height="20" x="12" y="0"></rect>
+                        </svg></button>
+                    <button type="button" class="video-control-btn act-fullscreen"><svg width="16" height="16" viewBox="0 0 12 12" preserveAspectRatio="xMidYMid" focusable="false" aria-labelledby="fullscreen-icon-title" role="img">
+                            <title id="fullscreen-icon-title">Enter full screen</title>
+                            <polyline class="fill" points="6,6 5.9,2 4.9,3 2.9,1 1,2.9 3,4.9 2,5.9" transform="translate(6,6)"></polyline>
+                            <polyline class="fill" points="6,6 5.9,2 4.9,3 2.9,1 1,2.9 3,4.9 2,5.9" transform="translate(6,6) rotate(90)"></polyline>
+                            <polyline class="fill" points="6,6 5.9,2 4.9,3 2.9,1 1,2.9 3,4.9 2,5.9" transform="translate(6,6) rotate(180)"></polyline>
+                            <polyline class="fill" points="6,6 5.9,2 4.9,3 2.9,1 1,2.9 3,4.9 2,5.9" transform="translate(6,6) rotate(270)"></polyline>
+                        </svg></button>
                 </div>
             </div>
             <div class="col">
@@ -152,6 +172,52 @@
             </div>
         </div>
 
+        <div class="row mb-4">
+
+            <div class="col-auto">
+
+                <div class="video-wrapper">
+                    <iframe src="https://player.vimeo.com/video/458727497?title=0&byline=0&portrait=0&sidedock=0&controls=0" frameborder="0" width="640" height="360" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+
+                </div>
+            </div>
+            <div class="col">
+
+                <table class="table">
+                    <tr>
+                        <td width="10" class="text-nowrap">Vimeo Title</td>
+                        <td><span id="title2"></span></td>
+                    </tr>
+
+                    <tr>
+                        <td width="10" class="text-nowrap">Status</td>
+                        <td><span id="status2">Paused</span></td>
+                    </tr>
+
+                    <tr>
+                        <td width="10" class="text-nowrap">Time Counter</td>
+                        <td><label id="minutes2">00</label>:<label id="seconds2">00</label></td>
+                    </tr>
+                    <tr>
+                        <td width="10" class="text-nowrap">Vimeo Time</td>
+                        <td>
+
+                            <div>
+                                <span id="vimeo-minutes2">00</span>:<span id="vimeo-seconds2">00</span> <span class="text-muted" id="vimeo-percent2">(00%)</span>
+                            </div>
+                            <div class="progress mt-1" style="height: 6px;">
+                                <div class="progress-bar" id="progressbar2" style="width: 0%"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="10" class="text-nowrap">Vimeo End</td>
+                        <td><span id="ended2"></span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -194,23 +260,90 @@
             }
         }
 
-        $('#act-play').click(function(e) {
+        $('.act-play').click(function(e) {
             e.preventDefault();
             e.stopPropagation();
 
             _play();
         });
 
-        $('#act-pause').click(function(e) {
+        $('.act-pause').click(function(e) {
             e.preventDefault();
             e.stopPropagation();
 
             _pause();
         })
 
+        $('.act-fullscreen').click(function(e) {
+
+            var fullscreenChange = null;
+            // other vars …
+
+            // Check for fullscreen support
+            if (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+
+                // If there's currently an element fullscreen, exit fullscreen
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+
+                // Do stuff when the video exits fullscreen mode
+                // …
+            } else {
+
+                // Otherwise, enter fullscreen
+                // `player` is just a `div` element wrapping the video
+                if (player.requestFullscreen) {
+                    player.requestFullscreen();
+                } else if (player.mozRequestFullScreen) {
+                    player.mozRequestFullScreen();
+                } else if (player.webkitRequestFullscreen) {
+                    player.webkitRequestFullscreen();
+                } else if (player.msRequestFullscreen) {
+                    player.msRequestFullscreen();
+                }
+
+                // Do stuff when the video enters fullscreen mode
+                // …
+            }
+
+            fullscreenChange = function() {
+
+                // Do something on fullscreen change event
+                // …
+            };
+
+            document.onfullscreenchange = function() {
+                if (!document.fullscreenElement) {
+                    fullscreenChange();
+                }
+            };
+            document.onwebkitfullscreenchange = function() {
+                if (!document.webkitFullscreenElement) {
+                    fullscreenChange();
+                }
+            };
+            document.onmozfullscreenchange = function() {
+                if (!document.mozFullScreenElement) {
+                    fullscreenChange();
+                }
+            };
+            document.onmsfullscreenchange = function() {
+                if (!document.msFullscreenElement) {
+                    fullscreenChange();
+                }
+            };
+        });
+
         function _play() {
 
-            if( vimeoState.ended ){
+            if (vimeoState.ended) {
                 vimeoState.ended = false;
 
                 $('.video-ended').hide()
@@ -219,8 +352,8 @@
             player.play().then(function() {
 
                 vimeoState.played = true;
-                $('#act-play').addClass('d-none').prop('disabled', true);
-                $('#act-pause').removeClass('d-none').prop('disabled', false);
+                $('.act-play').addClass('d-none').prop('disabled', true);
+                $('.act-pause').removeClass('d-none').prop('disabled', false);
             });
         }
 
@@ -228,21 +361,21 @@
             player.pause().then(function() {
 
                 vimeoState.played = false;
-                $('#act-play').removeClass('d-none').prop('disabled', false);
-                $('#act-pause').addClass('d-none').prop('disabled', true);
+                $('.act-play').removeClass('d-none').prop('disabled', false);
+                $('.act-pause').addClass('d-none').prop('disabled', true);
             });
         }
 
-        $('.video-wrapper').click(function(e) {
-            e.preventDefault();
+        // $('.video-wrapper').click(function(e) {
+        //     e.preventDefault();
 
-            if( vimeoState.played ){
-                _pause();
-            }
-            else{
-                _play();
-            }
-        })
+        //     if( vimeoState.played ){
+        //         _pause();
+        //     }
+        //     else{
+        //         _play();
+        //     }
+        // })
 
         var vimeoState = {
             waiting_for_first_pause_not_autoplay: false,
@@ -265,7 +398,9 @@
 
             byline: false,
             autopause: false,
-            muted: false,
+            // muted: false,
+
+            sidedock: false,
 
         };
 
@@ -361,13 +496,31 @@
 
         // player.on('chapterchange', onPlay);
 
-        // player.setColor('#00adef').then(function(color) {
-        //     // The new color value: #00ADEF
+        player.setColor('#ffffff').then(function(color) {
+            // The new color value: #00ADEF
 
-        //     console.log('color', color);
-        // }).catch(function(error) {
-        //     // An error occurred while setting the color
-        // });
+            console.log('color', color);
+        }).catch(function(error) {
+            // An error occurred while setting the color
+        });
+
+        player.setPlaybackRate(0.5).then(function(playbackRate) {
+            // The playback rate is set
+
+            console.log('setPlaybackRate', playbackRate);
+        }).catch(function(error) {
+
+            // console.log('setPlaybackRate', error);
+            switch (error.name) {
+                case 'RangeError':
+                    // The playback rate is less than 0.5 or greater than 2
+                    break;
+
+                default:
+                    // Some other error occurred
+                    break;
+            }
+        });
 
         player.on('ended', function(data) {
             // `data` is an object containing properties specific to that event
