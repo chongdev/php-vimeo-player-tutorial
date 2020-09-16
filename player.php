@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vimeo player</title>
+    <title>Vimeo Player</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style lang="scss">
@@ -12,7 +12,7 @@
             background-color: #f2f2f2;
             width: 640px;
             height: 360px;
-            pointer-events: none;
+            /* pointer-events: none; */
         }
 
         .video-wrapper {
@@ -67,7 +67,8 @@
 
             fill: currentColor;
         }
-        .video-ended{
+
+        .video-ended {
             position: absolute;
             z-index: 5;
             left: 0;
@@ -111,7 +112,7 @@
                         <div class="d-flex h-100 justify-content-center text-muted align-items-center">
                             Vimeo End
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -210,7 +211,7 @@
 
         function _play() {
 
-            if( vimeoState.ended ){
+            if (vimeoState.ended) {
                 vimeoState.ended = false;
 
                 $('.video-ended').hide()
@@ -236,10 +237,9 @@
         $('.video-wrapper').click(function(e) {
             e.preventDefault();
 
-            if( vimeoState.played ){
+            if (vimeoState.played) {
                 _pause();
-            }
-            else{
+            } else {
                 _play();
             }
         })
@@ -260,12 +260,51 @@
 
             portrait: false, // เจ้าของวิดีโอ
 
-            controls: false, // play bar, sharing buttons, etc
+            // controls: false, // play bar, sharing buttons, etc
 
 
             byline: false,
             autopause: false,
             muted: false,
+
+            controls: {
+            share: false,
+            watchlater: false,
+
+            },
+
+            // buttons: {
+            //     "like": false,
+            //     "watchlater": false,
+            //     "share": false,
+            //     "embed": false,
+            //     "hd": false,
+            //     "fullscreen": false,
+            //     "scaling": false
+            // },
+
+            // embed: {
+            //     buttons: {
+            //         "like": false,
+            //         "watchlater": false,
+            //         "share": false,
+            //         "embed": false,
+            //         "hd": false,
+            //         "fullscreen": false,
+            //         "scaling": false
+            //     },
+            //     // "like": false,
+            //     // "watchlater": false,
+            //     // "share": false,
+            //     // "embed": false,
+
+            //     logos: {
+            //         vimeo: false,
+            //     },
+            // },
+            // "logos": {
+            //     "vimeo": false,
+            // }
 
         };
 
@@ -432,6 +471,9 @@
 
         //     console.log('getPlaybackRate', playbackRate);
         // });
+
+        toggleFullscreen = function() {
+        }
     </script>
 </body>
 
