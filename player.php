@@ -92,7 +92,7 @@
         <div class="mb-3 d-flex align-items-center">
             <label for="vimeoID" class="mr-2  text-nowrap">Vimeo ID : </label>
             <input type="text" class="form-control input-vimeoid" id="vimeoID" autocomplete="off">
-            <button type="button" class="btn btn-primary text-nowrap ml-2 act-makecall">Make call</button>
+            <button type="button" class="btn btn-primary text-nowrap ml-2 act-makecall">Make Vimeo</button>
         </div>
         <div class="row mb-4">
 
