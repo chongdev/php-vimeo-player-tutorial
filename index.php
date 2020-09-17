@@ -6,10 +6,10 @@ require './config.php';
 use Vimeo\Vimeo;
 
 
-$client = new Vimeo("{$client_id}", "{$client_secret}", "{$access_token}");
+// $client = new Vimeo("{$client_id}", "{$client_secret}", "{$access_token}");
 
-$response = $client->request('/tutorial', array(), 'GET');
-print_r($response);
+// $response = $client->request('/tutorial', array(), 'GET');
+// print_r($response);
 
 
 ## Edit the title and description
