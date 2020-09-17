@@ -88,12 +88,20 @@
     <div class="container">
         <h1 class="text-center mb-3">PHP Vimeo Player Tutorial</h1>
 
+
+        <div class="mb-3 d-flex align-items-center">
+            <label for="vimeoID" class="mr-2  text-nowrap">Vimeo ID : </label>
+            <input type="text" class="form-control input-vimeoid" id="vimeoID" autocomplete="off">
+            <button type="button" class="btn btn-primary text-nowrap ml-2 act-makecall">Make call</button>
+        </div>
         <div class="row mb-4">
 
             <div class="col-auto">
 
                 <div class="video-wrapper">
-                    <div id="made-in-ny" class="player"></div>
+                    <div class="player">
+                        <div id="made-in-ny"></div>
+                    </div>
 
                     <div class="video-control d-none">
                         <button type="button" class="video-control-btn act-play"><svg width="20" height="20" viewBox="0 0 20 20">
@@ -115,7 +123,7 @@
                     </div>
                 </div>
 
-                <div class="d-flex mt-2">
+                <div class="d-flexs mt-2 d-none">
                     <button type="button" class="video-control-btn act-play mr-2"><svg width="20" height="20" viewBox="0 0 20 20">
                             <title id="play-icon-title">Play</title>
                             <polygon class="fill" points="1,0 20,10 1,20"></polygon>
@@ -165,6 +173,16 @@
                         </td>
                     </tr>
                     <tr>
+                        <td width="10" class="text-nowrap">Vimeo Duration</td>
+                        <td>
+
+                            <div>
+                                <span id="vimeo-duration-minutes">00</span>:<span id="vimeo-duration-seconds">00</span>
+                            </div>
+                            
+                        </td>
+                    </tr>
+                    <tr>
                         <td width="10" class="text-nowrap">Vimeo End</td>
                         <td><span id="ended"></span></td>
                     </tr>
@@ -172,14 +190,12 @@
             </div>
         </div>
 
-        <div class="row mb-4">
+        <div class="row mb-4 d-none">
 
             <div class="col-auto">
 
                 <div class="video-wrapper">
                     <iframe src="https://player.vimeo.com/video/458727497?title=0&byline=0&portrait=0&sidedock=0&controls=0" frameborder="0" width="640" height="360" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-
-
                 </div>
             </div>
             <div class="col">
@@ -366,9 +382,8 @@
             });
         }
 
-        // $('.video-wrapper').click(function(e) {
-        //     e.preventDefault();
-
+        $('.video-wrapper').click(function(e) {
+            e.preventDefault();
 
             if (vimeoState.played) {
                 _pause();
@@ -385,29 +400,29 @@
         };
 
         var options = {
-            id: 458631997,
+            id: "458631997",
             width: 640,
             // loop: true,
 
-            speed: false,
-            playsinline: false,
+            // speed: false,
+            // playsinline: false,
 
-            portrait: false, // เจ้าของวิดีโอ
+            // portrait: false, // เจ้าของวิดีโอ
 
-            // controls: false, // play bar, sharing buttons, etc
+            // // controls: false, // play bar, sharing buttons, etc
 
 
-            byline: false,
-            autopause: false,
-            // muted: false,
+            // byline: false,
+            // autopause: false,
+            // // muted: false,
 
-            sidedock: false,
+            // sidedock: false,
 
-            controls: {
-            share: false,
-            watchlater: false,
+            // controls: {
+            //     share: false,
+            //     watchlater: false,
 
-            },
+            // },
 
             // buttons: {
             //     "like": false,
@@ -445,7 +460,164 @@
         };
 
 
-        var player = new Vimeo.Player('made-in-ny', options);
+
+        $('.act-makecall').click(function(e) {
+            e.preventDefault();
+
+            let href = $('.input-vimeoid').val();
+
+            const vimeoid = href.substring(href.lastIndexOf('/') + 1);
+
+            if (vimeoid) {
+
+                options.id = vimeoid;
+                VimeoPlayer(options);
+                // console.log(vimeoid);
+            } else {
+                alert('input vimeo id');
+            }
+
+
+        })
+
+
+        // VimeoPlayer(options);
+
+        function VimeoPlayer(options) {
+
+
+            // $('#made-in-ny').remove();
+            $('.player').html($('<div id="made-in-ny"></div>'));
+
+            console.log('VimeoPlayer', options);
+            const player = new Vimeo.Player('made-in-ny', options);
+
+            player.on('play', function(data) {
+                // console.log('Played the video');
+                $('#status').text('Play');
+
+                // console.log('play duration', data.duration);
+                // console.log('play percent', data.percent);
+                // console.log('play seconds', data.seconds);
+
+                isTimeCounter = true
+            });
+
+            player.on('pause', function() {
+                // console.log('paused the video');
+
+                $('#status').text('Paused')
+
+                isTimeCounter = false
+            });
+            player.on('timeupdate', function(data) {
+                // console.log('timeupdate', data.percent*100);
+
+                const seconds = data.seconds;
+                const percent = (data.percent * 100);
+
+                $('#vimeo-seconds').text(pad(parseInt(seconds) % 60));
+                $('#vimeo-minutes').text(pad(parseInt(seconds / 60)));
+
+                $('#progressbar').css('width', percent + '%');
+                $('#vimeo-percent').text('(' + parseFloat(percent).toFixed(2) + '%)');
+
+
+                // if (vimeoState.waiting_for_first_pause_not_autoplay || 1==1) {
+                //     player.setVolume(1).then(() => {
+
+                //         player.pause().then(() => {
+                //             player.getPaused().then((paused) => {
+                //                 if (paused) {
+                //                     // A successful pause has occurred
+
+                //                     player.setCurrentTime(0.0).then(() => {
+
+                //                         player.pause().then(() => {
+
+                //                             vimeoState.waiting_for_first_pause_not_autoplay = false;
+                //                         });
+                //                     });
+                //                 }
+                //             });
+                //         });
+                //     });
+                // }
+            });
+
+            // var onPlay = function(data) {
+            //     console.log('onPlay', data.index);
+            //     console.log('onPlay', data.startTime);
+            //     console.log('onPlay', data.title);
+            // };
+            // player.on('bufferend', onPlay);
+
+            // player.on('chapterchange', onPlay);
+
+            // player.setColor('#ffffff').then(function(color) {
+            //     // The new color value: #00ADEF
+
+            //     console.log('color', color);
+            // }).catch(function(error) {
+            //     // An error occurred while setting the color
+            // });
+
+            // player.setPlaybackRate(0.5).then(function(playbackRate) {
+            //     // The playback rate is set
+
+            //     console.log('setPlaybackRate', playbackRate);
+            // }).catch(function(error) {
+
+            //     // console.log('setPlaybackRate', error);
+            //     switch (error.name) {
+            //         case 'RangeError':
+            //             // The playback rate is less than 0.5 or greater than 2
+            //             break;
+
+            //         default:
+            //             // Some other error occurred
+            //             break;
+            //     }
+            // });
+
+            player.on('ended', function(data) {
+                // `data` is an object containing properties specific to that event
+
+                $('#ended').text('Ended')
+                $('.video-ended').show()
+
+                vimeoState.ended = true;
+
+            });
+            player.on('duration', function(data) {
+                // `data` is an object containing properties specific to that event
+
+                // $('#ended').text('duration')
+                console.log('getDuration', data);
+
+            });
+
+            // player.on('volume', function() {
+            //     console.log('Volume the video');
+
+            //     // $('#status').text('paused')
+            // });
+
+
+            player.getVideoTitle().then(function(title) {
+                $('#title').text(title)
+            });
+
+            player.getDuration().then(function(duration) {
+                // `duration` indicates the duration of the video in seconds
+
+                $('#vimeo-duration-seconds').text(pad(parseInt(duration) % 60));
+                $('#vimeo-duration-minutes').text(pad(parseInt(duration / 60)));
+
+                console.log('getDuration', duration);
+            });
+        }
+
 
         // Your Vimeo SDK player script goes here
         // var iframe = document.querySelector('iframe');
@@ -472,122 +644,6 @@
         //             break;
         //     }
         // });
-
-        player.on('play', function(data) {
-            // console.log('Played the video');
-            $('#status').text('Play');
-
-            // console.log('play duration', data.duration);
-            // console.log('play percent', data.percent);
-            // console.log('play seconds', data.seconds);
-
-            isTimeCounter = true
-        });
-
-        player.on('pause', function() {
-            // console.log('paused the video');
-
-            $('#status').text('Paused')
-
-            isTimeCounter = false
-        });
-        player.on('timeupdate', function(data) {
-            // console.log('timeupdate', data.percent*100);
-
-            const seconds = data.seconds;
-            const percent = (data.percent * 100);
-
-            $('#vimeo-seconds').text(pad(parseInt(seconds) % 60));
-            $('#vimeo-minutes').text(pad(parseInt(seconds / 60)));
-
-            $('#progressbar').css('width', percent + '%');
-            $('#vimeo-percent').text('(' + parseFloat(percent).toFixed(2) + '%)');
-
-
-            // if (vimeoState.waiting_for_first_pause_not_autoplay || 1==1) {
-            //     player.setVolume(1).then(() => {
-
-            //         player.pause().then(() => {
-            //             player.getPaused().then((paused) => {
-            //                 if (paused) {
-            //                     // A successful pause has occurred
-
-            //                     player.setCurrentTime(0.0).then(() => {
-
-            //                         player.pause().then(() => {
-
-            //                             vimeoState.waiting_for_first_pause_not_autoplay = false;
-            //                         });
-            //                     });
-            //                 }
-            //             });
-            //         });
-            //     });
-            // }
-        });
-
-        var onPlay = function(data) {
-            console.log('onPlay', data.index);
-            console.log('onPlay', data.startTime);
-            console.log('onPlay', data.title);
-        };
-
-        player.on('bufferend', onPlay);
-
-        // player.on('chapterchange', onPlay);
-
-        player.setColor('#ffffff').then(function(color) {
-            // The new color value: #00ADEF
-
-            console.log('color', color);
-        }).catch(function(error) {
-            // An error occurred while setting the color
-        });
-
-        player.setPlaybackRate(0.5).then(function(playbackRate) {
-            // The playback rate is set
-
-            console.log('setPlaybackRate', playbackRate);
-        }).catch(function(error) {
-
-            // console.log('setPlaybackRate', error);
-            switch (error.name) {
-                case 'RangeError':
-                    // The playback rate is less than 0.5 or greater than 2
-                    break;
-
-                default:
-                    // Some other error occurred
-                    break;
-            }
-        });
-
-        player.on('ended', function(data) {
-            // `data` is an object containing properties specific to that event
-
-            $('#ended').text('Ended')
-            $('.video-ended').show()
-
-            vimeoState.ended = true;
-
-        });
-        player.on('duration', function(data) {
-            // `data` is an object containing properties specific to that event
-
-            // $('#ended').text('duration')
-            console.log('getDuration', data);
-        });
-
-        // player.on('volume', function() {
-        //     console.log('Volume the video');
-
-        //     // $('#status').text('paused')
-        // });
-
-        player.getVideoTitle().then(function(title) {
-
-            $('#title').text(title)
-        });
 
 
         // player.getCurrentTime().then(function(seconds) {
@@ -626,8 +682,7 @@
         //     console.log('getPlaybackRate', playbackRate);
         // });
 
-        toggleFullscreen = function() {
-        }
+        toggleFullscreen = function() {}
     </script>
 </body>
 
